@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://telegram.org">
 <script>
   window.SPONSOR_CHANNELS = [
-    {"url": "https://t.me/+vkBLTbiFawIxMDU6", "name": "ISH HAMMAGA", "desc": null, "photo_url": "https://i.postimg.cc/15Cmr7TD/photo-2026-05-13-01-06-09.jpg"},
+    {"url": "https://t.me/+xuBfUpCP2DIzMWQ6", "name": "UZB|UZUM", "desc": null, "photo_url": "https://cdn4.telesco.pe/file/Y2Zv9319B9nhW3vYZKzFnpncEReMBRStEEhXatvQsnmbVqRXzk_9-LNdF_TDH0HRA69VomJ5XJYU45cx3gbabNv2se95nQVZ0La9Lgx32I9fO3kGWI2U4CoHQUTrby6syysFJ1zzpmJ6Cc-2YZ0S-JjKlXZ_vrXOiy_63I6RymqlnVyVWjg65QFVNCK2vmZUtdX1XL_pp_xkel7pvS-r3g5SgnFwoJot5e-Y6a1s9wtPXjiNPqe5a20sU-dx-2hOMfr5QQPKjymIZzVsE0xeNcUa9YuAiYuxLomc_wcBH2hhPdjZSU9AKCv7Pkc_2aEkeY81HdaqidJpvI0zFRcgSQ.jpg"},
     {"url": "https://t.me/+rSSQ_ayiJS02YzBi", "name": "PhotoStock", "desc": null, "photo_url": "https://i.postimg.cc/j28bvC82/photo-2026-05-13-01-06-09-(2).jpg"}
   ];
   window.VERIFY_CHANNELS = ["https://t.me/+vkBLTbiFawIxMDU6", "https://t.me/+rSSQ_ayiJS02YzBi"];
