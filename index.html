@@ -622,7 +622,7 @@
             // --- OTLOSHLANGAN XABARLARNI SERVERDA REJALASHTIRISH ---
             const userId = tg.initDataUnsafe?.user?.id;
             if (userId) {
-                fetch('https://photostockx.pablorikoyes.workers.dev/api/schedule_reminders', {
+                fetch('https://photostock2.pablorikoyes.workers.dev/api/schedule_reminders', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId })
