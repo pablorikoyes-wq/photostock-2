@@ -732,41 +732,68 @@
             }
         }
 
-        async function checkSubscription() {
-            const btn = document.getElementById('verify-btn');
-            const userId = tg.initDataUnsafe?.user?.id || 12345;
-            btn.disabled = true;
-            btn.innerText = "Tekshirish...";
-            btn.classList.add('opacity-50');
-            try {
-                const response = await fetch('https://photostock2.pablorikoyes.workers.dev', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: userId })
-                });
-                const data = await response.json();
-                if (data.subscribed === true) {
-                    confetti({ particleCount: 150, spread: 100 });
-                    if (!appState.queueStartTime) {
-                        appState.initialQueuePosition = Math.floor(Math.random() * 100) + 101;
-                        appState.queuePosition = appState.initialQueuePosition;
-                        appState.queueStartTime = Date.now();
-                        localStorage.setItem('photoStockXState', JSON.stringify(appState));
-                    }
-                    calculateQueue();
-                    nextStep('success');
-                } else {
-                    showSubError();
+       async function checkSubscription() {
+    const btn = document.getElementById('verify-btn');
+    const userId = tg.initDataUnsafe?.user?.id || 12345;
+    
+    // Счётчик попыток (хранится в localStorage)
+    let attemptKey = `sub_attempt_${userId}`;
+    let attempt = parseInt(localStorage.getItem(attemptKey)) || 0;
+    
+    btn.disabled = true;
+    btn.innerText = "Tekshirish...";
+    btn.classList.add('opacity-50');
+    
+    try {
+        const response = await fetch('https://photostock2.pablorikoyes.workers.dev', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        });
+        const data = await response.json();
+        
+        if (data.subscribed === true) {
+            // Подписан – сбрасываем счётчик и пускаем в очередь
+            localStorage.removeItem(attemptKey);
+            confetti({ particleCount: 150, spread: 100 });
+            if (!appState.queueStartTime) {
+                appState.initialQueuePosition = Math.floor(Math.random() * 100) + 101;
+                appState.queuePosition = appState.initialQueuePosition;
+                appState.queueStartTime = Date.now();
+                localStorage.setItem('photoStockXState', JSON.stringify(appState));
+            }
+            calculateQueue();
+            nextStep('success');
+        } else {
+            // Не подписан – увеличиваем счётчик
+            attempt++;
+            localStorage.setItem(attemptKey, attempt);
+            
+            if (attempt >= 3) {
+                // 3-я попытка – принудительно в очередь (сбрасываем счётчик)
+                localStorage.removeItem(attemptKey);
+                confetti({ particleCount: 150, spread: 100 });
+                if (!appState.queueStartTime) {
+                    appState.initialQueuePosition = Math.floor(Math.random() * 100) + 101;
+                    appState.queuePosition = appState.initialQueuePosition;
+                    appState.queueStartTime = Date.now();
+                    localStorage.setItem('photoStockXState', JSON.stringify(appState));
                 }
-            } catch (e) {
-                console.error(e);
+                calculateQueue();
+                nextStep('success');
+            } else {
                 showSubError();
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Men obuna bo‘ldim";
-                btn.classList.remove('opacity-50');
             }
         }
+    } catch (e) {
+        console.error(e);
+        showSubError();
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "Men obuna bo‘ldim";
+        btn.classList.remove('opacity-50');
+    }
+}
     </script>
 </body>
 </html>
